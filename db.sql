@@ -4,8 +4,6 @@ ALTER ROLE api_pract CREATEDB;
 CREATE DATABASE praktica;
 CREATE SCHEMA api;
 CREATE SCHEMA auth;
-SET search_path TO api;
-SET search_path TO auth;
 
 CREATE TABLE auth.users
 (
