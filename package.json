@@ -24,7 +24,7 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "dev": "concurrently \"npm start\" \"react-scripts start\"",
+    "dev": "concurrently \"npm run server\" \"PORT=3001 react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
