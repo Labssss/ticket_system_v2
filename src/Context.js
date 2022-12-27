@@ -31,6 +31,7 @@ export const Context = (props) => {
             })
             setRole('')
             setIsLogged(false)
+            navigate("/")
         } else {
             return ''
         }

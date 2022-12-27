@@ -22,7 +22,7 @@ class TicketsController {
     async getTickets(req, res) {
         try {
             const user_id = req.user.id
-            const {rows} = await db.query('SELECT * FROM api.tickets WHERE user_id = $1 ORDER BY id', [user_id])
+            const {rows} = await db.query('SELECT id, title, message, firstname, lastname, phone, email, status, created_at FROM api.tickets WHERE user_id = $1 ORDER BY id', [user_id])
             res.json(rows)
         } catch (e) {
             console.log(e)
@@ -30,22 +30,45 @@ class TicketsController {
         }
     }
 
-    async getOneTicket(req, res) {
-        const id = req.params.id
-        const useful = await db.query('SELECT * FROM useful WHERE id = $1', [id])
-        res.json(useful.rows[0])
+    async getAllTickets(req, res) {
+        try {
+            if (req.query.order === 'open') {
+                const {rows} = await db.query('SELECT * FROM api.tickets WHERE status = $1 ORDER BY id', ["ОТКРЫТА"])
+                return res.json(rows)
+            } 
+            const {rows} = await db.query('SELECT * FROM api.tickets ORDER BY id')
+            res.json(rows)
+        } catch (e) {
+            console.log(e)
+            res.status(400).json({message: 'Get all tickets error'})
+        }
     }
 
-    async updateTicket(req, res) {
-        const {id, title, description, url} = req.body
-        const useful = await db.query('UPDATE useful SET title = $1, description = $2, url = $3 WHERE id = $4 RETURNING *', [title, description, url, id])
-        res.json(useful.rows[0])
+    async cancelTicket(req, res) {
+        try {
+            const user_id = req.user.id
+            const ticket_id = req.params.id
+            if (req.query.cancel) {
+                const {rows: [ticket, ...any]} = await db.query('UPDATE api.tickets SET status = $1 WHERE id = $2 AND user_id = $3 RETURNING id, title, message, firstname, lastname, phone, email, status, created_at', ['ОТМЕНЕНА', ticket_id, user_id])
+                res.json(ticket)
+            }    
+        } catch (e) {
+            console.log(e)
+            res.status(400).json({message: 'Cancel ticket error'})
+        }
     }
 
-    async deleteTicket(req, res) {
-        const id = req.params.id
-        const useful = await db.query('DELETE FROM useful WHERE id = $1', [id])
-        res.json(useful.rows[0])
+    async confirmTicket(req, res) {
+        try {
+            const ticket_id = req.params.id
+            if (req.query.confirm) {
+                const {rows: [ticket, ...any]} = await db.query('UPDATE api.tickets SET status = $1 WHERE id = $2 RETURNING *', ['РЕШЕНА', ticket_id])
+                res.json(ticket)
+            }     
+        } catch (e) {
+            console.log(e)
+            res.status(400).json({message: 'Cancel ticket error'})
+        }
     }
 }
 

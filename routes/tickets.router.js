@@ -13,8 +13,9 @@ router.post('/tickets', roleMiddleware(["USER"]), [
     check('email', "Почтовый адрес в неверном формате").isEmail(),
     check('feedbackType', "Тип обратной свзязи не может быть пустым").notEmpty()
 ], controller.createTicket)
-// router.get('/useful/:id', usefulController.getOneUseful)
-// router.put('/useful', usefulController.updateUseful)
-// router.delete('/useful/:id', usefulController.deleteUseful)
+router.put('/tickets/:id', roleMiddleware(["USER"]), controller.cancelTicket)
+
+router.get('/tickets/all', roleMiddleware(["ADMIN"]), controller.getAllTickets)
+router.put('/tickets/all/:id', roleMiddleware(["ADMIN"]), controller.confirmTicket)
 
 module.exports = router

@@ -3,7 +3,7 @@ import {CustomContext} from "../../Context";
 import {Link, NavLink} from "react-router-dom"
 
 const Header = () => {
-    const {user, logOutUser, isLogged, role} = useContext(CustomContext);
+    const {user, role, logOutUser, isLogged} = useContext(CustomContext);
 
     return (
         <header className="text-gray-600 body-font">
@@ -17,13 +17,8 @@ const Header = () => {
                 <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
                 <NavLink className='mr-5 hover:text-gray-900' to="/">Главная</NavLink>
                 {
-                isLogged 
+                isLogged && role == 'USER' 
                 ? <NavLink className='mr-5 hover:text-gray-900' to="/tickets">Мои заявки</NavLink> 
-                : ''
-                }
-                {
-                isLogged && role === 'ADMIN'
-                ? <NavLink className='mr-5 hover:text-gray-900' to="/adminpanel">Админ панель</NavLink> 
                 : ''
                 }
                 

@@ -5,7 +5,7 @@ import {CustomContext} from "../Context";
 
 export function CreateTicket (props) {
 
-    const {user, setUser, setIsLogged} = useContext(CustomContext);
+    const {user} = useContext(CustomContext);
     const [error, setError] = useState('');
     const [succesfull, setSuccesfull] = useState('');
 
@@ -66,6 +66,7 @@ export function CreateTicket (props) {
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput123"
                                 placeholder="First name"
+                                maxLength="100"
                                 {...register('firstName')}
                                 />
                             </div>
@@ -87,6 +88,7 @@ export function CreateTicket (props) {
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput124"
                                 placeholder="Last name"
+                                maxLength="100"
                                 {...register('lastName')}
                                 required
                                 />
@@ -109,6 +111,7 @@ export function CreateTicket (props) {
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput125"
                                 placeholder="Email address"
+                                maxLength="100"
                                 {...register('email')}
                                 required
                                 />
@@ -154,6 +157,7 @@ export function CreateTicket (props) {
                             m-0
                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput124"
                             placeholder="Title"
+                            maxLength="100"
                             {...register('title')}
                             required
                             />
@@ -181,6 +185,7 @@ export function CreateTicket (props) {
                                 rows="3"
                                 placeholder="Your message"
                                 {...register('message')}
+                                maxLength="1000"
                                 required
                                 >
                             </textarea>
