@@ -30,6 +30,7 @@ const Registration = () => {
         .then(data => {
             localStorage.setItem('user', JSON.stringify(data));
             setUser(data)
+            setIsLogged(true)
             grantRole(data)
             navigate('/')
         });
